@@ -152,77 +152,170 @@
       border-radius: 0 0 18px 18px;
       margin-top: 2rem;
     }
-    /* Solo dejar estilos para .event-grid y .event-card relacionados con el grid */
-    .event-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
-      margin: 2rem auto;
-      padding: 1.5rem;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 4px 16px rgba(44, 76, 130, 0.08);
+    /* Estilos para el carousel de eventos compacto */
+    .event-carousel-container {
+      position: relative;
       max-width: 900px;
-      /* Centrar como el header */
-      width: 100%;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(44, 76, 130, 0.06);
     }
-    @media (max-width: 1100px) {
-      .event-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    
+    .event-carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      gap: 1rem;
+      padding: 0.5rem 0;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      justify-content: flex-start;
     }
+    
+    .event-carousel::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .carousel-nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    
+    .carousel-btn {
+      background: #6ea8fe;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 2px 8px rgba(44, 76, 130, 0.1);
+    }
+    
+    .carousel-btn:hover {
+      background: #5a9bfe;
+      transform: scale(1.1);
+    }
+    
+    .carousel-btn:disabled {
+      background: #bfc9d8;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .carousel-indicators {
+      display: flex;
+      justify-content: center;
+      gap: 0.3rem;
+      margin-top: 0.5rem;
+    }
+    
+    .indicator-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #bfc9d8;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .indicator-dot.active {
+      background: #6ea8fe;
+    }
+    
+    /* Destacar el evento próximo */
+    .event-card[data-upcoming="true"] {
+      border: 2px solid #6ea8fe;
+      box-shadow: 0 6px 25px rgba(110, 168, 254, 0.25);
+      transform: scale(1.05);
+    }
+    
+    .event-card[data-upcoming="true"] h3 {
+      color: #2d6cdf;
+    }
+    
     @media (max-width: 700px) {
-      .event-grid {
-        grid-template-columns: 1fr;
-        padding: 0.5rem;
-        gap: 1rem;
+      .event-carousel-container {
+        padding: 0.8rem;
       }
+      
       .event-card {
-        padding: 0.7rem;
+        min-width: 280px;
+        max-width: 280px;
+      }
+      
+      .carousel-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.9rem;
+      }
+      
+      .event-carousel {
+        gap: 0.8rem;
       }
     }
     .event-card {
       border: 1px solid #e0e6f0;
-      border-radius: 8px;
+      border-radius: 12px;
       overflow: hidden;
       background: #fff;
-      box-shadow: 0 2px 12px #0001;
-      padding: 1rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      padding: 0.8rem;
       text-align: center;
-      transition: transform 0.2s;
-      min-width: 0;
+      transition: transform 0.2s, box-shadow 0.2s;
+      min-width: 220px;
+      max-width: 220px;
+      flex-shrink: 0;
     }
     .event-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
     }
     .event-card img {
       width: 100%;
-      border-radius: 12px;
-      margin-bottom: 0.5rem;
-      height: auto;
+      border-radius: 8px;
+      margin-bottom: 0.6rem;
+      height: 120px;
+      object-fit: cover;
       display: block;
     }
     .event-card h3 {
-      font-size: 1.3rem;
+      font-size: 1rem;
       font-weight: 600;
-      margin: 0.8rem 0 0.4rem 0;
+      margin: 0.5rem 0 0.3rem 0;
       color: #23335b;
+      line-height: 1.3;
     }
     .event-card p {
-      font-size: 1rem;
-      margin: 0 0 0.8rem 0;
+      font-size: 0.85rem;
+      margin: 0 0 0.6rem 0;
       color: #6a7a8c;
+      line-height: 1.2;
     }
     .event-card button {
       background: #6ea8fe;
       color: #fff;
       border: none;
-      border-radius: 20px;
-      padding: 0.6rem 1.4rem;
-      font-size: 0.9rem;
-      font-weight: 700;
+      border-radius: 16px;
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
       cursor: pointer;
       transition: background 0.2s;
+      width: 100%;
+      box-sizing: border-box;
+      height: auto;
+      line-height: 1.2;
+      margin-top: 0.3rem;
     }
     .event-card button:hover:not(:disabled) {
       background: #5a9bfe;
@@ -250,10 +343,13 @@
         font-size: 1.15rem;
       }
       .event-card h3 {
-        font-size: 1.1rem;
+        font-size: 1rem;
       }
       .event-card p {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+      }
+      .eventos-section {
+        padding: 1.5rem 1rem;
       }
     }
     .facilitadores-grid {
@@ -371,20 +467,25 @@
       background: #6ea8fe;
       color: #fff;
       border: none;
-      border-radius: 20px;
-      padding: 0.6rem 1.4rem;
-      font-size: 0.9rem;
-      font-weight: 700;
+      border-radius: 16px;
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
       cursor: pointer;
       text-decoration: none;
-      margin-top: 0.5rem;
+      margin-top: 0.3rem;
       transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
       box-shadow: 0 2px 8px rgba(44, 76, 130, 0.07);
+      width: 100%;
+      text-align: center;
+      box-sizing: border-box;
+      height: auto;
+      line-height: 1.2;
     }
     .event-signup-btn:hover {
       background: #5a9bfe;
       box-shadow: 0 4px 16px rgba(44, 76, 130, 0.13);
-      transform: translateY(-2px) scale(1.04);
+      transform: translateY(-1px);
     }
     .eventos-section {
       max-width: 900px;
@@ -480,43 +581,72 @@
   </div>
 </header>
 <section id="eventos" class="eventos-section">
-  <div class="event-grid">    
-    <div class="event-card">
+  <h2 style="text-align: center; margin-bottom: 2rem;">Próximos Eventos</h2>
+  <div class="event-carousel-container">
+    <div class="event-carousel" id="eventCarousel">
+      <!-- Eventos en orden cronológico -->
+      <div class="event-card">
         <img src="evento1.png" alt="Evento 1">
         <h3>¿Y ahora que?</h3>
         <p>21 de mayo, 2025</p>
         <button class="finalizado" disabled>Finalizado</button>
-    </div>
-    <div class="event-card">
+      </div>
+      <div class="event-card">
         <img src="evento2.png" alt="Evento 2">
         <h3>Autoexigencia Constructiva</h3>
         <p>11 de junio, 2025 - 19:00 hrs</p>
         <button class="finalizado" disabled>Finalizado</button>
-    </div>
-    <div class="event-card">
+      </div>
+      <div class="event-card">
         <img src="evento3.png" alt="Evento 3">
         <h3>¿Quién soy cuando acompaño?</h3>
         <p>02 de julio, 2025 - 19:30 hrs</p>
         <button class="finalizado" disabled>Finalizado</button>
-    </div>
-    <div class="event-card">
-        <img src="evento4.png" alt="Evento 4">
+      </div>
+      <div class="event-card">
+        <img src="Ira.png" alt="Evento 4">
         <h3>La Ira</h3>
         <p>16 de julio, 2025 - 19:00 hrs</p>
         <button class="finalizado" disabled>Finalizado</button>
-    </div> 
-        <div class="event-card">
-        <img src="evento4.png" alt="Evento 4">
-        <h3>Los Límitez</h3>
+      </div>
+      <div class="event-card">
+        <img src="limites.png" alt="Evento 5">
+        <h3>Los Límites</h3>
         <p>30 de julio, 2025 - 19:00 hrs</p>
         <button class="finalizado" disabled>Finalizado</button>
-    </div>
-        <div class="event-card">
-        <img src="evento4.png" alt="Evento 4">
+      </div>
+      
+      <!-- Evento próximo (destacado) -->
+      <div class="event-card" data-upcoming="true">
+        <img src="Prejuicios.png" alt="Los Prejuicios">
         <h3>Los Prejuicios</h3>
         <p>13 de agosto, 2025 - 19:00 hrs</p>
         <a href="#contacto" class="event-signup-btn">Anotarse</a>
+      </div>
+      
+      <!-- Eventos futuros -->
+      <div class="event-card">
+        <img src="evento1.png" alt="Evento futuro">
+        <h3>Por Definir</h3>
+        <p>27 de agosto, 2025 - 19:00 hrs</p>
+        <a href="#contacto" class="event-signup-btn">Anotarse</a>
+      </div>
+      <div class="event-card">
+        <img src="evento1.png" alt="Evento futuro">
+        <h3>Por Definir</h3>
+        <p>10 de sept, 2025 - 19:00 hrs</p>
+        <a href="#contacto" class="event-signup-btn">Anotarse</a>
+      </div>
     </div>
+    
+    <!-- Navegación del carousel -->
+    <div class="carousel-nav">
+      <button class="carousel-btn" id="prevBtn">‹</button>
+      <button class="carousel-btn" id="nextBtn">›</button>
+    </div>
+    
+    <!-- Indicadores -->
+    <div class="carousel-indicators" id="indicators"></div>
   </div>
 </section>
 <section>
@@ -563,12 +693,12 @@
   <p>Alternamos la facilitación, integrando nuestras voces y estilos. Nos acompañamos con honestidad, escucha y apertura. Queremos sumar nuestros conocimientos y construir desde la diferencia.</p>
   <p><strong>A dónde no queremos ir:</strong> No queremos encasillarnos en un solo tema o formato. No buscamos competir ni entrar en conflicto con otras profesiones. Defendemos la seguridad en el rol y el respeto por la diversidad.</p>
 </section>
-
+<!-- 
 <section>
   <h2>Testimonios [En construcción]</h2>
   <blockquote>“Sentí por primera vez que alguien me escuchaba sin querer cambiarme. Fue un antes y un después.” — Mariana, 34 años</blockquote>
   <blockquote>“Con mi equipo logramos destrabar situaciones que nos frenaban hace meses. Se notó el cambio.” — Equipo de diseño, empresa de tecnología</blockquote>
-</section>
+</section> -->
 
 <section id="contacto">
   <h2>¿Primera vez? dejanos tus datos para enviarte más información</h2>
@@ -593,6 +723,166 @@
     </div>
   </div>
 </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const carousel = document.getElementById('eventCarousel');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const indicatorsContainer = document.getElementById('indicators');
+  const cards = carousel.querySelectorAll('.event-card');
+  
+  let currentIndex = 0;
+  let cardWidth, visibleCards, maxIndex;
+  
+  // Función para calcular dimensiones dinámicamente
+  function calculateDimensions() {
+    const containerWidth = carousel.offsetWidth;
+    // Ajustar cardWidth según el tamaño de pantalla
+    if (window.innerWidth <= 700) {
+      cardWidth = 280 + 13; // móvil: card + gap reducido
+    } else {
+      cardWidth = 220 + 16; // desktop: card + gap normal
+    }
+    visibleCards = Math.floor(containerWidth / cardWidth);
+    maxIndex = Math.max(0, cards.length - visibleCards);
+  }
+  
+  // Inicializar dimensiones
+  calculateDimensions();
+  
+  // Encontrar el evento destacado y centrarlo en el carousel
+  const upcomingCard = carousel.querySelector('[data-upcoming="true"]');
+  if (upcomingCard) {
+    const upcomingIndex = Array.from(cards).indexOf(upcomingCard);
+    // Centrar el evento más cercano a la fecha de hoy
+    const centerPosition = Math.floor(visibleCards / 2);
+    currentIndex = Math.max(0, Math.min(upcomingIndex - centerPosition, maxIndex));
+  }
+  
+  // Crear indicadores
+  function createIndicators() {
+    indicatorsContainer.innerHTML = '';
+    const indicatorCount = Math.ceil(cards.length / Math.max(1, visibleCards));
+    for (let i = 0; i < indicatorCount; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'indicator-dot';
+      if (i === Math.floor(currentIndex / Math.max(1, visibleCards))) {
+        dot.classList.add('active');
+      }
+      dot.addEventListener('click', () => goToSlide(i * Math.max(1, visibleCards)));
+      indicatorsContainer.appendChild(dot);
+    }
+  }
+  
+  // Actualizar posición del carousel
+  function updateCarousel() {
+    const scrollPosition = currentIndex * cardWidth;
+    carousel.scrollTo({
+      left: scrollPosition,
+      behavior: 'smooth'
+    });
+    
+    // Actualizar botones
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentIndex >= maxIndex;
+    
+    // Actualizar indicadores
+    const indicators = indicatorsContainer.querySelectorAll('.indicator-dot');
+    indicators.forEach((dot, index) => {
+      dot.classList.toggle('active', index === Math.floor(currentIndex / Math.max(1, visibleCards)));
+    });
+  }
+  
+  // Ir a un slide específico
+  function goToSlide(index) {
+    currentIndex = Math.max(0, Math.min(index, maxIndex));
+    updateCarousel();
+  }
+  
+  // Event listeners para los botones
+  prevBtn.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      currentIndex = Math.max(0, currentIndex - 1);
+      updateCarousel();
+    }
+  });
+  
+  nextBtn.addEventListener('click', () => {
+    if (currentIndex < maxIndex) {
+      currentIndex = Math.min(maxIndex, currentIndex + 1);
+      updateCarousel();
+    }
+  });
+  
+  // Soporte para touch/swipe en móviles mejorado
+  let startX = 0;
+  let startY = 0;
+  let scrollLeft = 0;
+  let isScrolling = false;
+  
+  carousel.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].pageX;
+    startY = e.touches[0].pageY;
+    scrollLeft = carousel.scrollLeft;
+    isScrolling = false;
+  }, { passive: true });
+  
+  carousel.addEventListener('touchmove', (e) => {
+    if (!startX || !startY) return;
+    
+    const x = e.touches[0].pageX;
+    const y = e.touches[0].pageY;
+    const diffX = Math.abs(x - startX);
+    const diffY = Math.abs(y - startY);
+    
+    // Solo permitir scroll horizontal si el movimiento es más horizontal que vertical
+    if (diffX > diffY && diffX > 10) {
+      e.preventDefault();
+      isScrolling = true;
+      const walk = (x - startX) * 1.5;
+      carousel.scrollLeft = scrollLeft - walk;
+    }
+  }, { passive: false });
+  
+  carousel.addEventListener('touchend', (e) => {
+    if (isScrolling) {
+      e.preventDefault();
+      const newIndex = Math.round(carousel.scrollLeft / cardWidth);
+      currentIndex = Math.max(0, Math.min(newIndex, maxIndex));
+      updateCarousel();
+    }
+    startX = 0;
+    startY = 0;
+    isScrolling = false;
+  }, { passive: false });
+  
+  // Redimensionar ventana con debounce
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      calculateDimensions();
+      
+      // Recentrar el evento destacado después del redimensionamiento
+      if (upcomingCard) {
+        const upcomingIndex = Array.from(cards).indexOf(upcomingCard);
+        const centerPosition = Math.floor(visibleCards / 2);
+        currentIndex = Math.max(0, Math.min(upcomingIndex - centerPosition, maxIndex));
+      } else {
+        currentIndex = Math.min(currentIndex, maxIndex);
+      }
+      
+      createIndicators();
+      updateCarousel();
+    }, 250);
+  });
+  
+  // Inicializar
+  createIndicators();
+  updateCarousel();
+});
+</script>
 
 </body>
 </html>
