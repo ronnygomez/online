@@ -219,6 +219,9 @@
         <!-- Pantalla 3: Jugar -->
         <div id="screen-play" class="screen">
             <div class="info-text">¡Todos los jugadores ya vieron su palabra!</div>
+            <div class="info-text" style="font-size: 1.3em; color: #667eea; font-weight: bold; margin: 30px 0;">
+                🎯 En esta ronda inicia: <span id="jugador-inicia"></span>
+            </div>
             <div class="info-text">🎮 ¡Cada jugador dice palabras relacionadas a la palabra elegida!</div>
             <button onclick="mostrarFinalizarRonda()">REVELAR IMPOSTOR</button>
         </div>
@@ -291,6 +294,7 @@
         let palabraElegida = "";
         let impostorIndex = -1;
         let participanteActual = 0;
+        let jugadorInicia = "";
 
         // Inicializar la lista de jugadores
         function inicializarJugadores() {
@@ -381,6 +385,9 @@
                 actualizarBotonParticipante();
             } else {
                 // Todos vieron su palabra
+                // Elegir aleatoriamente quién inicia
+                jugadorInicia = jugadoresRonda[Math.floor(Math.random() * jugadoresRonda.length)];
+                document.getElementById('jugador-inicia').textContent = jugadorInicia;
                 mostrarPantalla('screen-play');
             }
         }
