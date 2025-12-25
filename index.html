@@ -76,6 +76,20 @@
             flex: 1;
         }
 
+        .jugador-item input[type="text"] {
+            font-size: 1.2em;
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            flex: 1;
+            transition: border-color 0.3s;
+        }
+
+        .jugador-item input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
         button {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -286,9 +300,25 @@
             }).join('');
         }
 
-        const JUGADORES_TODOS = [
-            "Irene", "Izamar", "Ronny", "Enrique", "Ebany", "Kris", "PapaEnrique", "MamaEnrique"
+        const JUGADORES_DEFAULT = [
+            "Irene", "Izamar", "Ronny","Alberto", "Enrique", "Ebany", "Kris", "PapaEnrique", "MamaEnrique"
         ];
+
+        // Cargar nombres guardados de localStorage o usar los por defecto
+        let jugadoresNombres = [];
+        
+        function cargarNombresGuardados() {
+            const guardados = localStorage.getItem('jugadoresNombres');
+            if (guardados) {
+                jugadoresNombres = JSON.parse(guardados);
+            } else {
+                jugadoresNombres = [...JUGADORES_DEFAULT];
+            }
+        }
+
+        function guardarNombres() {
+            localStorage.setItem('jugadoresNombres', JSON.stringify(jugadoresNombres));
+        }
 
         let jugadoresRonda = [];
         let palabraElegida = "";
@@ -301,7 +331,7 @@
             const lista = document.getElementById('jugadores-list');
             lista.innerHTML = '';
             
-            JUGADORES_TODOS.forEach((jugador, index) => {
+            jugadoresNombres.forEach((jugador, index) => {
                 const div = document.createElement('div');
                 div.className = 'jugador-item';
                 
@@ -311,12 +341,17 @@
                 checkbox.checked = true;
                 checkbox.onchange = actualizarContador;
                 
-                const label = document.createElement('label');
-                label.htmlFor = `jugador-${index}`;
-                label.textContent = jugador;
+                const inputNombre = document.createElement('input');
+                inputNombre.type = 'text';
+                inputNombre.value = jugador;
+                inputNombre.id = `nombre-${index}`;
+                inputNombre.onchange = (e) => {
+                    jugadoresNombres[index] = e.target.value;
+                    guardarNombres();
+                };
                 
                 div.appendChild(checkbox);
-                div.appendChild(label);
+                div.appendChild(inputNombre);
                 lista.appendChild(div);
             });
             
@@ -335,7 +370,7 @@
             const checkboxes = document.querySelectorAll('#jugadores-list input[type="checkbox"]');
             checkboxes.forEach((cb, index) => {
                 if (cb.checked) {
-                    jugadoresRonda.push(JUGADORES_TODOS[index]);
+                    jugadoresRonda.push(jugadoresNombres[index]);
                 }
             });
 
@@ -418,6 +453,7 @@
         }
 
         // Inicializar al cargar la página
+        cargarNombresGuardados();
         inicializarJugadores();
     </script>
 </body>
